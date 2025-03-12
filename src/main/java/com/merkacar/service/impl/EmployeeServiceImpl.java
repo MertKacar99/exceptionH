@@ -2,6 +2,9 @@ package com.merkacar.service.impl;
 
 import com.merkacar.dto.DtoDepartmant;
 import com.merkacar.dto.DtoEmployee;
+import com.merkacar.exception.BaseException;
+import com.merkacar.exception.ErrorMessage;
+import com.merkacar.exception.MessageType;
 import com.merkacar.model.Employee;
 import com.merkacar.repository.EmployeeRepository;
 import com.merkacar.service.IEmployeeService;
@@ -23,7 +26,7 @@ public class EmployeeServiceImpl implements IEmployeeService {
         DtoDepartmant dtoDepartmant = new DtoDepartmant();
         Optional<Employee> optional = employeeRepository.findById(id);
         if(optional.isEmpty()) {
-            return null;
+            throw  new BaseException(new ErrorMessage(MessageType.NO_RECORD_EXIST,id.toString()));
         }
         Employee employee = optional.get();
 //        dtoDepartmant.setId(employee.getDepartment().getId());
